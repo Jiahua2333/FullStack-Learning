@@ -276,11 +276,29 @@ const Button = ({onclick, text}) => (
 const App = (props) => {
   const [selected, setSelected] = useState(0)
   const [totalVotes, setVotes] = useState([])
+  const [mostVoted, setMostVoted] = useState(0)
   //setVotes([...votes])
   //const copy = [...votes]
 
   const showNextText = () =>{  
     setSelected(Math.floor(Math.random() * anecdotes.length))
+  }
+
+  const indexOfMax = (arr) =>{
+    if (arr.length === 0) {
+        return -1;
+    }
+
+    let max = arr[0];
+    let maxIndex = 0;
+
+    for (var i = 1; i < arr.length; i++) {
+        if (arr[i] > max) {
+            maxIndex = i;
+            max = arr[i];
+        }
+    }
+    return maxIndex;
   }
 
   const voting = () =>{  
@@ -289,11 +307,18 @@ const App = (props) => {
       const copy = [...votes]
       copy[parseInt(selected)]++
       setVotes([...copy])
+      //console.log(totalVotes)
+      let maxIndex = indexOfMax(copy);
+      //setMostVoted(totalVotes.indexOf(Math.max(...totalVotes)))
+      setMostVoted(maxIndex);
     }
     else {
       const copy = [...totalVotes]
       copy[parseInt(selected)]++
-      setVotes([...copy])
+      setVotes([...copy])  
+      let maxIndex = indexOfMax(copy);
+      //setMostVoted(totalVotes.indexOf(Math.max(...totalVotes)))
+      setMostVoted(maxIndex);
     }
     //console.log(totalVotes)
   }
@@ -302,13 +327,21 @@ const App = (props) => {
   if(totalVotes.length === 0) displayVote =  "It has 0 votes"
   else displayVote = `It has ${totalVotes[selected]} votes`
 
+  let displayMostVote
+  if(totalVotes.length === 0) displayMostVote =  "It has 0 votes"
+  else displayMostVote = `It has ${totalVotes[mostVoted]} votes`
+
   return (
     
     <div>
-      {props.anecdotes[selected]} <br/>
-      {displayVote} <br/>
+      <h1>Anecdote of the day</h1>
+      <p>{props.anecdotes[selected]}</p>
+      <p>{displayVote}</p>
       <Button onclick={showNextText} text='Next anecdote' />
-      <Button onclick={voting} text='Votes' />
+      <Button onclick={voting} text='Votes' /><br/>
+      <h1>Anecdote of with most votes</h1> 
+      <p>{props.anecdotes[mostVoted]}</p>
+      <p>{displayMostVote}</p>
     </div>
   )
 }
