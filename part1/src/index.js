@@ -208,6 +208,20 @@ const App = () => {
     setAverage((parseInt(good)-parseInt(bad+1))/parseInt(All+1))
     setPositive(parseInt(good)/parseInt(All+1))
   }
+  let displayStatistics
+  if(parseInt(bad) !== 0 || parseInt(good) !== 0 || parseInt(neutral) !== 0){
+    displayStatistics = (
+      <>
+      <Statistics text='Good' counter={good} />
+      <Statistics text='Neutral' counter={neutral} />
+      <Statistics text='Bad' counter={bad} />
+      <Statistics text='All' counter={All} />
+      <Statistics text='Average' counter={average} />
+      <Statistics text='Positive' counter={positive} />
+      </>
+    )
+  }
+  else displayStatistics = <p>No feedback given</p>
   return (
     <div>
       <h1> Give Feedback </h1>
@@ -215,12 +229,7 @@ const App = () => {
       <Button onClick={handleNeutralClick} text='Neutral' />
       <Button onClick={handleBadClick} text='Bad' />
       <h1> Statistics </h1>
-      <Statistics text='Good' counter={good} />
-      <Statistics text='Neutral' counter={neutral} />
-      <Statistics text='Bad' counter={bad} />
-      <Statistics text='All' counter={All} />
-      <Statistics text='Average' counter={average} />
-      <Statistics text='Positive' counter={positive} />
+      {displayStatistics}
     </div>
   )
 }
