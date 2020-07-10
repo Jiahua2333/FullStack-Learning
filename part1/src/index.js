@@ -275,18 +275,45 @@ const Button = ({onclick, text}) => (
 
 const App = (props) => {
   const [selected, setSelected] = useState(0)
+  const [totalVotes, setVotes] = useState([])
+  //setVotes([...votes])
+  //const copy = [...votes]
 
-  const showNextText = () =>{
+  const showNextText = () =>{  
     setSelected(Math.floor(Math.random() * anecdotes.length))
   }
 
+  const voting = () =>{  
+    //console.log(totalVotes.length)
+    if(totalVotes.length === 0) {    
+      const copy = [...votes]
+      copy[parseInt(selected)]++
+      setVotes([...copy])
+    }
+    else {
+      const copy = [...totalVotes]
+      copy[parseInt(selected)]++
+      setVotes([...copy])
+    }
+    //console.log(totalVotes)
+  }
+
+  let displayVote
+  if(totalVotes.length === 0) displayVote =  "It has 0 votes"
+  else displayVote = `It has ${totalVotes[selected]} votes`
+
   return (
+    
     <div>
       {props.anecdotes[selected]} <br/>
-      <Button onclick={showNextText} text='next anecdote' />
+      {displayVote} <br/>
+      <Button onclick={showNextText} text='Next anecdote' />
+      <Button onclick={voting} text='Votes' />
     </div>
   )
 }
+
+
 
 const anecdotes = [
   'If it hurts, do it more often',
@@ -296,6 +323,10 @@ const anecdotes = [
   'Premature optimization is the root of all evil.',
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
+
+let votes = []
+votes.length = anecdotes.length
+votes.fill(0);
 
 ReactDOM.render(
   <App anecdotes={anecdotes} />,
