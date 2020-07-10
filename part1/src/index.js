@@ -177,7 +177,12 @@ const Button = ({onClick, text}) => (
   </button>
 )
 
-const Statistics = ({text, counter}) => <p>{text}: {counter}</p>
+const Statistics = ({text, counter}) => (
+  <>
+  <td>{text}</td> 
+  <td>{counter}</td>
+  </>
+)
 
 
 const App = () => {
@@ -212,18 +217,39 @@ const App = () => {
   if(parseInt(bad) !== 0 || parseInt(good) !== 0 || parseInt(neutral) !== 0){
     displayStatistics = (
       <>
-      <Statistics text='Good' counter={good} />
-      <Statistics text='Neutral' counter={neutral} />
-      <Statistics text='Bad' counter={bad} />
-      <Statistics text='All' counter={All} />
-      <Statistics text='Average' counter={average} />
-      <Statistics text='Positive' counter={positive} />
+        <table>
+          <tbody>
+            <tr>
+            <Statistics text='Good' counter={good} />
+            </tr>
+
+            <tr>
+            <Statistics text='Neutral' counter={neutral} />
+            </tr>
+
+            <tr>
+            <Statistics text='Bad' counter={bad} />
+            </tr>
+
+            <tr>
+            <Statistics text='All' counter={All} />
+            </tr>
+
+            <tr>
+            <Statistics text='Average' counter={average} />
+            </tr>
+
+            <tr>  
+            <Statistics text='Positive' counter={positive} />
+            </tr>  
+          </tbody>
+        </table>
       </>
     )
   }
   else displayStatistics = <p>No feedback given</p>
 
-  
+
   return (
     <div>
       <h1> Give Feedback </h1>
