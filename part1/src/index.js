@@ -222,6 +222,8 @@ const App = () => {
     )
   }
   else displayStatistics = <p>No feedback given</p>
+
+  
   return (
     <div>
       <h1> Give Feedback </h1>
