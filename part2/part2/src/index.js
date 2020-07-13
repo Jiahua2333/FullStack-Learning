@@ -2,13 +2,21 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 const Course = ({course}) =>{
-    console.log(course.parts)
+    //console.log(course.parts)
     return (
         <div>
             <Header name={course.name} />
             {course.parts.map(part => {
                return <Content key={part.id} part={part} />
-            })}            
+            })}  
+            <Total 
+            sum={
+                course.parts.reduce((s, p) =>{
+                    console.log(s,parseInt(p.exercises))
+                    return s + parseInt(p.exercises)
+                }, 0)
+            }          
+            />          
         </div>
     )
 }
@@ -16,6 +24,9 @@ const Course = ({course}) =>{
 const Header = ({name}) =>  <h1>{name}</h1>
 
 const Content = ({part}) => <p>{part.name}: {part.exercises}</p>
+
+const Total = ({sum}) => <p>Total of exercises: {sum}</p>
+
 
 const App = () => {
     const course = {
